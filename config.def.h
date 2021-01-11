@@ -63,7 +63,7 @@ static const char *browser[]  = { "google-chrome-stable", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
+	{ ALTKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_f,      spawn,          {.v = browser } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
