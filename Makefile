@@ -1,5 +1,5 @@
 # dwm - dynamic window manager
-# my build
+# my dwm build
 
 include config.mk
 
