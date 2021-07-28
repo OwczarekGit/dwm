@@ -1,4 +1,4 @@
 *.o
 dwm
-
+*.orig
 config.h
