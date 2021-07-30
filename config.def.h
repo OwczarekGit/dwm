@@ -11,8 +11,8 @@ static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 
-static const char *fonts[]          = { "monospace:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
+static const char *fonts[]          = { "Ubuntu:pixelsize=12:antialias=true:autohint=true" };
+static const char dmenufont[]       = "Ubuntu:pixelsize=12:antialias=true:autohint=true";
 
 #include "colors.h"
 
@@ -29,7 +29,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "3", "4", "5", "6", "7", "", "" };
+static const char *tags[] = { "", "", "", "4", "5", "6", "", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -37,7 +37,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class         instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",        NULL,       NULL,       0,            1,           -1 },
+      //{ "Gimp",        NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",     NULL,       NULL,       1 << 8,       0,           -1 },
 	{ "Galculator",  NULL,       NULL,       0,            1,           -1 },
 };
