@@ -1,5 +1,5 @@
-static const char col_gray1[]       = "#002459";
-static const char col_gray2[]       = "#12437E";
-static const char col_gray3[]       = "#F1DFDD";
-static const char col_gray4[]       = "#E0D4C8";
-static const char col_cyan[]        = "#135B96";
+static const char col_gray1[]       = "#212320"; // Workspace/Tray BG
+static const char col_gray2[]       = "#203C52"; // IDK
+static const char col_gray3[]       = "#FFFFFF"; // Workspace squares
+static const char col_gray4[]       = "#E1E3E0"; // Text
+static const char col_cyan[]        = "#203C52"; // Window name BG
