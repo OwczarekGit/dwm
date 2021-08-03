@@ -118,8 +118,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ MODKEY,                       XK_s, scratchpad_show,     {0} },
-	{ MODKEY|ShiftMask,             XK_s, scratchpad_hide,     {0} },
+	{ MODKEY,                       XK_s, toggleScratchpad,    {0} },
+	{ MODKEY|ShiftMask,             XK_s, moveToScratchpad,    {0} },
 	{ MODKEY,                       XK_d,scratchpad_remove,    {0} },
 };
 

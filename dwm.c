@@ -234,6 +234,8 @@ static void scratchpad_remove ();
 static void scratchpad_show ();
 static void scratchpad_show_client (Client * c);
 static void scratchpad_show_first (void);
+static void toggleScratchpad();
+static void moveToScratchpad();
 static int sendevent(Window w, Atom proto, int m, long d0, long d1, long d2, long d3, long d4);
 static void sendmon(Client *c, Monitor *m);
 static void setclientstate(Client *c, long state);
@@ -283,6 +285,7 @@ static void centeredmaster(Monitor *m);
 static void centeredfloatingmaster(Monitor *m);
 
 /* variables */
+static int isScratchpadOpen = 0;
 static Systray *systray =  NULL;
 static const char broken[] = "broken";
 static char stext[256];
@@ -1625,8 +1628,17 @@ scan(void)
 	}
 }
 
+static void toggleScratchpad()
+{
+	if(isScratchpadOpen)
+		scratchpad_hide();
+	else
+		scratchpad_show();
+}
+
 static void scratchpad_hide ()
 {
+	isScratchpadOpen = 0;
 	for (Client * c = selmon -> clients; c != NULL; c = c -> next)
 	{
 		if (c -> isScratchpadWindow)
@@ -1636,6 +1648,12 @@ static void scratchpad_hide ()
 		}
 	}
 
+	focus(NULL);
+	arrange(selmon);
+}
+
+static void moveToScratchpad()
+{
 	if (selmon -> sel)
 	{
 		selmon -> sel -> tags = SCRATCHPAD_MASK;
@@ -1673,6 +1691,8 @@ static void scratchpad_remove ()
 
 static void scratchpad_show ()
 {
+	isScratchpadOpen = 1;
+
 	if (scratchpad_last_showed == NULL || scratchpad_last_showed_is_killed ())
 		scratchpad_show_first ();
 	else
