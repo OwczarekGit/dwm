@@ -1700,7 +1700,11 @@ static void scratchpad_remove ()
 	{
 		scratchpad_last_showed = NULL;
 		selmon -> sel -> isScratchpadWindow = 0;
+		selmon -> sel -> isfloating = 0;
+		focus(NULL);
 	}
+
+	arrange(selmon);
 }
 
 static void scratchpad_show ()
