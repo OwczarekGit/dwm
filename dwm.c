@@ -113,6 +113,7 @@ struct Client {
 	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
 	Client *next;
 	Client *snext;
+	int isScratchpadWindow;
 	Monitor *mon;
 	Window win;
 };
@@ -1626,14 +1627,25 @@ scan(void)
 
 static void scratchpad_hide ()
 {
+	for (Client * c = selmon -> clients; c != NULL; c = c -> next)
+	{
+		if (c -> isScratchpadWindow)
+		{
+			c -> tags = SCRATCHPAD_MASK;
+			c -> isfloating = 1;
+		}
+	}
+
 	if (selmon -> sel)
 	{
 		selmon -> sel -> tags = SCRATCHPAD_MASK;
 		selmon -> sel -> isfloating = 1;
+		selmon -> sel -> isScratchpadWindow = 1;
 
-		focus(NULL);
-		arrange(selmon);
 	}
+
+	focus(NULL);
+	arrange(selmon);
 }
 
 static _Bool scratchpad_last_showed_is_killed (void)
@@ -1653,7 +1665,10 @@ static _Bool scratchpad_last_showed_is_killed (void)
 static void scratchpad_remove ()
 {
 	if (selmon -> sel && scratchpad_last_showed != NULL && selmon -> sel == scratchpad_last_showed)
+	{
 		scratchpad_last_showed = NULL;
+		selmon -> sel -> isScratchpadWindow = 0;
+	}
 }
 
 static void scratchpad_show ()
@@ -1700,6 +1715,7 @@ static void scratchpad_show ()
 static void scratchpad_show_client (Client * c)
 {
 	scratchpad_last_showed = c;
+	c -> isScratchpadWindow = 1;
 	c -> tags = selmon->tagset[selmon->seltags];
 	focus(c);
 	arrange(selmon);
