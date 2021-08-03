@@ -1656,10 +1656,24 @@ static void moveToScratchpad()
 {
 	if (selmon -> sel)
 	{
-		selmon -> sel -> tags = SCRATCHPAD_MASK;
-		selmon -> sel -> isfloating = 1;
-		selmon -> sel -> isScratchpadWindow = 1;
+		int shouldResize = 1;
 
+		if(selmon->sel->isfloating)
+			shouldResize = 0;
+
+		selmon->sel->tags       	= SCRATCHPAD_MASK;
+		selmon->sel->isfloating 	= 1;
+		selmon->sel->isScratchpadWindow = 1;
+
+
+		if(shouldResize)
+		{
+			int newW = selmon->mw/2;
+			int newH = selmon->mh/2;
+			int newX = ((selmon->mx + selmon->mw/2) - newW/2);
+			int newY = ((selmon->my + selmon->mh/2) - newH/2);
+			resize(selmon->sel, newX, newY, newW, newH, 0);
+		}
 	}
 
 	focus(NULL);
