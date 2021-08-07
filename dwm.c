@@ -2048,11 +2048,21 @@ spawn(const Arg *arg)
 void
 tag(const Arg *arg)
 {
-	if (selmon->sel && arg->ui & TAGMASK) {
+	if (selmon->sel && arg->ui & TAGMASK)
+	{
+		if (selmon -> sel && scratchpad_last_showed != NULL && selmon -> sel == scratchpad_last_showed)
+		{
+			scratchpad_last_showed = NULL;
+			selmon -> sel -> isScratchpadWindow = 0;
+			selmon -> sel -> isfloating = 0;
+			focus(NULL);
+		}
+
 		selmon->sel->tags = arg->ui & TAGMASK;
 		focus(NULL);
-		arrange(selmon);
 	}
+	
+	arrange(selmon);
 }
 
 void
