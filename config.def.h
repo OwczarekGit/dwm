@@ -120,7 +120,11 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY,                       XK_s, toggleScratchpad,    {0} },
 	{ MODKEY|ShiftMask,             XK_s, moveToScratchpad,    {0} },
-	{ MODKEY,                       XK_d,scratchpad_remove,    {0} },
+	{ MODKEY,                       XK_d, scratchpad_remove,   {0} },
+	{ MODKEY,                       XK_Left,   viewtoleft,     {0} },
+	{ MODKEY,                       XK_Right,  viewtoright,    {0} },
+	{ MODKEY|ShiftMask,             XK_Left,   tagtoleft,      {0} },
+	{ MODKEY|ShiftMask,             XK_Right,  tagtoright,     {0} },
 };
 
 /* button definitions */
