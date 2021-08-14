@@ -1344,7 +1344,7 @@ movemouse(const Arg *arg)
 	if (!getrootptr(&x, &y))
 		return;
 
-	int shouldDefloat = 0;
+	int shouldMaximize = 0;
 
 	do {
 		XMaskEvent(dpy, MOUSEMASK|ExposureMask|SubstructureRedirectMask, &ev);
@@ -1384,20 +1384,22 @@ movemouse(const Arg *arg)
 						ev.xmotion.x, ev.xmotion.y,
 						selmon->mx, selmon->my,
 						selmon->mw, 16))
-				shouldDefloat = 1;
+				shouldMaximize = 1;
 			else
-				shouldDefloat = 0;
+				shouldMaximize = 0;
 
 			break;
 		}
 	} while (ev.type != ButtonRelease);
 
-	if (shouldDefloat)
+	if (shouldMaximize)
 	{
 		scratchpad_last_showed = NULL;
-		c->isfloating = 0;
+		c->isfloating = 1;
 		c->isScratchpadWindow =  0;
-		focus(NULL);
+		resizeclient(c, selmon->wx, selmon->wy, selmon->ww-(borderpx*2), selmon->wh-(borderpx*2));
+
+		focus(c);
 		arrange(selmon);
 	}
 
