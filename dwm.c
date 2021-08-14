@@ -1312,6 +1312,16 @@ motionnotify(XEvent *e)
 	mon = m;
 }
 
+int isPointInRectangle(int x, int y, int rx, int ry, int rw, int rh)
+{
+	if( (x >= rx) && (x <= rx + rw)
+	 && (y >= ry) && (y <= ry + rh))
+		return 1;
+
+	return 0;
+}
+	
+
 void
 movemouse(const Arg *arg)
 {
@@ -1369,7 +1379,11 @@ movemouse(const Arg *arg)
 			if (!selmon->lt[selmon->sellt]->arrange || c->isfloating)
 				resize(c, nx, ny, c->w, c->h, 1);
 
-			if (c->isfloating && ((ev.xmotion.y_root) < (selmon->my + 4)))
+			//if (c->isfloating && ((ev.xmotion.y_root) < (selmon->my + 4)))
+			if (c->isfloating && isPointInRectangle(
+						ev.xmotion.x, ev.xmotion.y,
+						selmon->mx, selmon->my,
+						selmon->mw, 16))
 				shouldDefloat = 1;
 			else
 				shouldDefloat = 0;
