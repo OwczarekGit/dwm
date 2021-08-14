@@ -1392,7 +1392,7 @@ movemouse(const Arg *arg)
 			if (c->isfloating && isPointInRectangle(
 						ev.xmotion.x, ev.xmotion.y,
 						selmon->mx, selmon->my,
-						16, selmon->wh))
+						16, selmon->mh))
 				shouldTileLeft = 1;
 			else
 				shouldTileLeft = 0;
@@ -1400,7 +1400,7 @@ movemouse(const Arg *arg)
 			if (c->isfloating && isPointInRectangle(
 						ev.xmotion.x, ev.xmotion.y,
 						selmon->mx+selmon->mw-16, selmon->my,
-						16, selmon->wh))
+						16, selmon->mh))
 				shouldTileRight = 1;
 			else
 				shouldTileRight = 0;
