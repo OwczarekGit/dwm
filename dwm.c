@@ -1344,7 +1344,9 @@ movemouse(const Arg *arg)
 	if (!getrootptr(&x, &y))
 		return;
 
-	int shouldMaximize = 0;
+	int shouldMaximize  = 0;
+	int shouldTileLeft  = 0;
+	int shouldTileRight = 0;
 
 	do {
 		XMaskEvent(dpy, MOUSEMASK|ExposureMask|SubstructureRedirectMask, &ev);
@@ -1379,7 +1381,6 @@ movemouse(const Arg *arg)
 			if (!selmon->lt[selmon->sellt]->arrange || c->isfloating)
 				resize(c, nx, ny, c->w, c->h, 1);
 
-			//if (c->isfloating && ((ev.xmotion.y_root) < (selmon->my + 4)))
 			if (c->isfloating && isPointInRectangle(
 						ev.xmotion.x, ev.xmotion.y,
 						selmon->mx, selmon->my,
@@ -1387,6 +1388,22 @@ movemouse(const Arg *arg)
 				shouldMaximize = 1;
 			else
 				shouldMaximize = 0;
+
+			if (c->isfloating && isPointInRectangle(
+						ev.xmotion.x, ev.xmotion.y,
+						selmon->mx, selmon->my,
+						16, selmon->wh))
+				shouldTileLeft = 1;
+			else
+				shouldTileLeft = 0;
+
+			if (c->isfloating && isPointInRectangle(
+						ev.xmotion.x, ev.xmotion.y,
+						selmon->mx+selmon->mw-16, selmon->my,
+						16, selmon->wh))
+				shouldTileRight = 1;
+			else
+				shouldTileRight = 0;
 
 			break;
 		}
@@ -1402,6 +1419,30 @@ movemouse(const Arg *arg)
 		focus(c);
 		arrange(selmon);
 	}
+
+	if (shouldTileLeft)
+	{
+		scratchpad_last_showed = NULL;
+		c->isfloating = 1;
+		c->isScratchpadWindow =  0;
+		resizeclient(c, selmon->wx, selmon->wy, selmon->ww/2-(borderpx*2), selmon->wh-(borderpx*2));
+
+		focus(c);
+		arrange(selmon);
+	}
+
+	if (shouldTileRight)
+	{
+		scratchpad_last_showed = NULL;
+		c->isfloating = 1;
+		c->isScratchpadWindow =  0;
+		resizeclient(c, (selmon->wx + selmon->ww)/2, selmon->wy, selmon->ww/2-(borderpx*2), selmon->wh-(borderpx*2));
+
+		focus(c);
+		arrange(selmon);
+	}
+
+
 
 	XUngrabPointer(dpy, CurrentTime);
 	if ((m = recttomon(c->x, c->y, c->w, c->h)) != selmon) {
