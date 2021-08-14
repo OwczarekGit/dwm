@@ -1380,7 +1380,9 @@ movemouse(const Arg *arg)
 
 	if (shouldDefloat)
 	{
+		scratchpad_last_showed = NULL;
 		c->isfloating = 0;
+		c->isScratchpadWindow =  0;
 		focus(NULL);
 		arrange(selmon);
 	}
