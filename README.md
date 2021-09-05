@@ -1,10 +1,9 @@
 
 
 # dwm - dynamic window manager
+![Example Config](screenshot.png)
 ============================
 dwm is an extremely fast, small, and dynamic window manager for X.
-
-![Example Config](screenshot.png)
 
 Requirements
 ------------
